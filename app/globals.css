@@ -1,26 +1,244 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+	--background: #ffffff;
+	--foreground: #171717;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+	/* Fonts */
+	--font-display: "Silkscreen", system-ui, sans-serif;
+	--font-body:
+		system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+	/* Dark space background */
+	--color-space-950: #050314;
+	--color-space-900: #0a0622;
+	--color-space-850: #0d0928;
+	--color-space-800: #11102e;
+	--color-space-750: #151538;
+	--color-space-700: #1a1a42;
+
+	/* Portal green (primary) */
+	--color-portal-50: #ebfff6;
+	--color-portal-100: #d1ffea;
+	--color-portal-200: #a8ffd9;
+	--color-portal-300: #6cffb8; /* original */
+	--color-portal-400: #3cffaa;
+	--color-portal: #3cffaa; /* brighter default for better contrast */
+	--color-portal-500: #1ae89a;
+	--color-portal-600: #0bc77f;
+	--color-portal-dark: #0aa36a; /* darker for light backgrounds */
+	--color-portal-700: #0a8b5f;
+	--color-portal-800: #0d6d4d;
+	--color-portal-900: #0e5940;
+
+	/* Toxic green (accent) */
+	--color-toxic-50: #f7ffeb;
+	--color-toxic-100: #edffd6;
+	--color-toxic-200: #dcffad;
+	--color-toxic-300: #c4ff7a;
+	--color-toxic-400: #b8ff4d;
+	--color-toxic: #b8ff4d; /* brighter for contrast */
+	--color-toxic-500: #9eeb00;
+	--color-toxic-600: #7ac200;
+	--color-toxic-dark: #5d9600; /* improved dark variant */
+	--color-toxic-700: #4a7a00;
+	--color-toxic-800: #3d5f00;
+	--color-toxic-900: #314f00;
+
+	/* Slime teal (secondary) */
+	--color-slime-50: #edfcf8;
+	--color-slime-100: #d3f8ef;
+	--color-slime-200: #aaf0e1;
+	--color-slime-300: #75e5d0;
+	--color-slime-400: #54d7b4; /* original */
+	--color-slime: #54d7b4;
+	--color-slime-500: #2ec09d;
+	--color-slime-600: #1fa082;
+	--color-slime-dark: #188769; /* darker for contrast */
+	--color-slime-700: #177462;
+	--color-slime-800: #175d50;
+	--color-slime-900: #164c43;
+
+	/* Plasma purple (accent) */
+	--color-plasma-50: #f7f1ff;
+	--color-plasma-100: #efe5ff;
+	--color-plasma-200: #e1cfff;
+	--color-plasma-300: #caa8ff;
+	--color-plasma-400: #b37dff;
+	--color-plasma: #9f5bff; /* original */
+	--color-plasma-500: #9747ff;
+	--color-plasma-600: #8b2eff;
+	--color-plasma-dark: #6f1fd4; /* improved dark variant */
+	--color-plasma-700: #6f1fd4;
+	--color-plasma-800: #5e1aad;
+	--color-plasma-900: #4d178b;
+
+	/* Bubblegum pink (accent) */
+	--color-bubblegum-50: #fff0f7;
+	--color-bubblegum-100: #ffe3f1;
+	--color-bubblegum-200: #ffc6e4;
+	--color-bubblegum-300: #ff99cd;
+	--color-bubblegum-400: #ff5caa;
+	--color-bubblegum: #ff4fa3; /* original */
+	--color-bubblegum-500: #ff1489;
+	--color-bubblegum-600: #f0006f;
+	--color-bubblegum-dark: #c20058; /* improved dark variant */
+	--color-bubblegum-700: #c20058;
+	--color-bubblegum-800: #a1004a;
+	--color-bubblegum-900: #850043;
+
+	/* UI neutrals (blue-tinted) */
+	--color-ui-50: #f5f7ff;
+	--color-ui-100: #ebedff;
+	--color-ui-200: #d6daff;
+	--color-ui-300: #b8bfff;
+	--color-ui-400: #969dff;
+	--color-ui-500: #7680ff;
+	--color-ui-600: #5964f5;
+	--color-ui-700: #4a4fd9;
+	--color-ui-800: #3b3faf;
+	--color-ui-850: #2e3287;
+	--color-ui-900: #232766;
+	--color-ui-950: #181b47;
+
+	/* Semantic tokens - Backgrounds */
+	--color-surface: #0a0622; /* cards, panels */
+	--color-surface-elevated: #0d0928; /* modals, popovers */
+	--color-surface-hover: #11102e; /* interactive surface hover */
+	--color-inset: #050314; /* input wells, recessed areas */
+
+	/* Semantic tokens - Borders */
+	--color-border-subtle: #1a1a42;
+	--color-border: #232766; /* DEFAULT */
+	--color-border-emphasis: #4a4fd9;
+	--color-border-brand: #3cffaa;
+
+	/* Semantic tokens - Text */
+	--color-primary: #f5f7ff; /* main text */
+	--color-secondary: #d6daff; /* secondary text */
+	--color-muted: #969dff; /* muted text */
+	--color-disabled: #5964f5; /* disabled states */
+	--color-inverse: #050314; /* text on light backgrounds */
+
+	--color-brand: #3cffaa; /* branded text */
+	--color-accent: #b8ff4d; /* accent highlights */
+	--color-link: #6cffb8; /* links */
+	--color-link-hover: #d1ffea; /* link hover */
+
+	/* Semantic tokens - Interactive */
+	--color-interactive-primary: #3cffaa;
+	--color-interactive-primary-hover: #a8ffd9;
+	--color-interactive-primary-active: #3cffaa;
+
+	--color-interactive-secondary: #5964f5;
+	--color-interactive-secondary-hover: #7680ff;
+
+	--color-interactive-danger: #ff4fa3;
+	--color-interactive-danger-hover: #ff99cd;
+
+	--color-interactive-success: #54d7b4;
+	--color-interactive-warning: #b8ff4d;
+
+	/* Semantic tokens - Status */
+	--color-success: #54d7b4;
+	--color-warning: #b8ff4d;
+	--color-error: #ff4fa3;
+	--color-info: #9f5bff;
+
+	/* Border radius */
+	--radius-sm: 0.375rem;
+	--radius-default: 0.5rem;
+	--radius-md: 0.75rem;
+	--radius-lg: 1rem;
+	--radius-xl: 1.5rem;
+	--radius-goo: 2rem; /* extreme rounded */
+	--radius-portal: 999px; /* full rounded */
+
+	/* Shadows */
+	--shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+	--shadow-default: 0 4px 16px rgba(0, 0, 0, 0.35);
+	--shadow-md: 0 8px 24px rgba(0, 0, 0, 0.4);
+	--shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.45);
+	--shadow-xl: 0 20px 48px rgba(0, 0, 0, 0.5);
+
+	/* Glowing shadows */
+	--shadow-portal:
+		0 0 25px rgba(60, 255, 170, 0.5), 0 0 10px rgba(60, 255, 170, 0.3);
+	--shadow-portal-lg:
+		0 0 40px rgba(60, 255, 170, 0.6), 0 0 15px rgba(60, 255, 170, 0.4);
+	--shadow-plasma:
+		0 0 20px rgba(159, 91, 255, 0.6), 0 0 10px rgba(159, 91, 255, 0.3);
+	--shadow-toxic:
+		0 0 20px rgba(184, 255, 77, 0.5), 0 0 10px rgba(184, 255, 77, 0.3);
+	--shadow-card: 0 12px 30px rgba(0, 0, 0, 0.45);
+
+	/* Gradients */
+	--bg-space-gradient:
+		radial-gradient(circle at top, rgba(60, 255, 170, 0.08) 0%, transparent 55%),
+		radial-gradient(
+			circle at 20% 80%,
+			rgba(159, 91, 255, 0.08) 0%,
+			transparent 55%
+		),
+		radial-gradient(
+			circle at 80% 30%,
+			rgba(255, 79, 163, 0.06) 0%,
+			transparent 55%
+		), linear-gradient(135deg, #050314, #0a0622 50%, #11102e 100%);
+
+	--bg-portal-ring: conic-gradient(
+		from 180deg,
+		#3cffaa,
+		#b8ff4d,
+		#9f5bff,
+		#ff4fa3,
+		#3cffaa
+	);
+
+	--bg-gradient-brand: linear-gradient(135deg, #0bc77f, #2ec09d);
+	--bg-gradient-accent: linear-gradient(135deg, #9747ff, #ff1489);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: 'Silkscreen', Helvetica, sans-serif;
+	background: var(--background);
+	color: var(--foreground);
+	font-family: "Silkscreen", Helvetica, sans-serif;
 }
+
+@keyframes spin {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
+@keyframes float {
+	0%,
+	100% {
+		transform: translateY(0px);
+	}
+	50% {
+		transform: translateY(-6px);
+	}
+}
+
+@utility animate-spin {
+	animation: portal-spin 10s linear infinite;
+}
+
+@utility animate-float {
+	animation: float-slow 6s ease-in-out infinite;
+}
+
+/** I reeeeeally don't like default cursor on buttons, so I'm overriding it here. (https://tailwindcss.com/docs/upgrade-guide#buttons-use-the-default-cursor) */
+@layer base {
+	button:not(:disabled),
+	[role="button"]:not(:disabled) {
+	  cursor: pointer;
+	}
+  }
+  
