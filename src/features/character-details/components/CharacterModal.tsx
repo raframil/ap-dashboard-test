@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { Avatar } from "@/components/atoms/Avatar";
 import { Badge } from "@/components/atoms/Badge";
 import { Button } from "@/components/atoms/Button";
+import { SpoilerBadge } from "@/components/molecules/SpoilerBadge";
 import { useUIStore } from "@/stores/useUIStore";
 
 export function CharacterModal() {
@@ -12,8 +13,6 @@ export function CharacterModal() {
 		selectedCharacter,
 		isCharacterModalOpen,
 		closeCharacterModal,
-		isCharacterRevealed,
-		revealCharacter,
 	} = useUIStore();
 
 	useEffect(() => {
@@ -43,20 +42,6 @@ export function CharacterModal() {
 	}, [isCharacterModalOpen, closeCharacterModal]);
 
 	if (!isCharacterModalOpen || !selectedCharacter) return null;
-
-	const isRevealed = isCharacterRevealed(selectedCharacter.id);
-	const shouldBlur = !isRevealed;
-
-	const statusVariant = {
-		Alive: "success" as const,
-		Dead: "error" as const,
-		unknown: "default" as const,
-	}[selectedCharacter.status];
-
-	const handleReveal = (e: React.MouseEvent) => {
-		e.stopPropagation();
-		revealCharacter(selectedCharacter.id);
-	};
 
 	const handleOnKeyDownDialog = (e: React.KeyboardEvent<HTMLDivElement>) => {
 		if (e.key === "Escape") {
@@ -106,32 +91,7 @@ export function CharacterModal() {
 								{selectedCharacter.name}
 							</h2>
 							<div className="flex flex-wrap gap-2">
-								<div className="relative">
-									<Badge
-										variant={shouldBlur ? "default" : statusVariant}
-										className={shouldBlur ? "blur-sm select-none" : ""}
-									>
-										{isRevealed && !shouldBlur && (
-											<span className="mr-1">✓</span>
-										)}
-										{selectedCharacter.status}
-									</Badge>
-									{shouldBlur && (
-										<button
-											onClick={handleReveal}
-											className="absolute inset-0 flex flex-col items-center justify-center hover:bg-brand/10 transition-colors group rounded"
-											aria-label="Click to reveal status"
-											type="button"
-										>
-											<span className="text-xs font-display text-brand group-hover:opacity-0 transition-opacity">
-												Spoiler
-											</span>
-											<span className="text-xs text-muted absolute opacity-0 group-hover:opacity-100 transition-opacity">
-												Reveal
-											</span>
-										</button>
-									)}
-								</div>
+								<SpoilerBadge characterId={selectedCharacter.id} status={selectedCharacter.status} />
 								<Badge variant="default">{selectedCharacter.species}</Badge>
 								{selectedCharacter.type && (
 									<Badge variant="info">{selectedCharacter.type}</Badge>

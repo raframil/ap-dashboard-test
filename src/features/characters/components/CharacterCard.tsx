@@ -3,7 +3,7 @@
 import { IconPin } from "@tabler/icons-react";
 import { Avatar } from "@/components/atoms/Avatar";
 import { Badge } from "@/components/atoms/Badge";
-import { useUIStore } from "@/stores/useUIStore";
+import { SpoilerBadge } from "@/components/molecules/SpoilerBadge";
 import type { Character } from "@/types/character";
 
 interface CharacterCardProps {
@@ -12,31 +12,22 @@ interface CharacterCardProps {
 }
 
 export function CharacterCard({ character, onClick }: CharacterCardProps) {
-	const { isCharacterRevealed, revealCharacter } = useUIStore();
-
-	const isRevealed = isCharacterRevealed(character.id);
-	const shouldBlur = !isRevealed;
-
-	const statusVariant = {
-		Alive: "success" as const,
-		Dead: "error" as const,
-		unknown: "default" as const,
-	}[character.status];
-
-	const handleReveal = (e: React.MouseEvent) => {
-		e.stopPropagation();
-		revealCharacter(character.id);
-	};
-
 	return (
 		<button
 			onClick={() => onClick?.(character)}
+			onKeyDown={(e) => {
+				if (e.key === "Enter" || e.key === " ") {
+					e.preventDefault();
+					onClick?.(character);
+				}
+			}}
+			tabIndex={0}
 			className={`
 				w-full bg-surface border border-DEFAULT rounded-lg p-6
 				hover:bg-surface-elevated hover:border-brand
 				transition-all duration-300
 				shadow-default hover:shadow-portal
-				text-left group
+				text-left group cursor-pointer
       		`}
 			type="button"
 		>
@@ -56,30 +47,7 @@ export function CharacterCard({ character, onClick }: CharacterCardProps) {
 						{character.type && ` - ${character.type}`}
 					</p>
 					<div className="flex flex-wrap gap-2">
-						<div className="relative">
-							<Badge
-								variant={shouldBlur ? "default" : statusVariant}
-								className={shouldBlur ? "blur-sm select-none" : ""}
-							>
-								{isRevealed && !shouldBlur && <span className="mr-1">✓</span>}
-								{character.status}
-							</Badge>
-							{shouldBlur && (
-								<button
-									onClick={handleReveal}
-									className="absolute inset-0 flex flex-col items-center justify-center hover:bg-brand/10 transition-colors group rounded"
-									aria-label="Click to reveal status"
-									type="button"
-								>
-									<span className="text-xs font-display text-brand group-hover:opacity-0 transition-opacity">
-										Spoiler
-									</span>
-									<span className="text-xs text-muted absolute opacity-0 group-hover:opacity-100 transition-opacity">
-										Reveal
-									</span>
-								</button>
-							)}
-						</div>
+						<SpoilerBadge characterId={character.id} status={character.status} />
 						<Badge variant="default">{character.gender}</Badge>
 					</div>
 					{character.location && (
