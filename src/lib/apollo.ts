@@ -26,6 +26,22 @@ export const apolloClient = new ApolloClient({
 							};
 						},
 					},
+					locations: {
+						keyArgs: ["filter"],
+						merge(existing, incoming, { args }) {
+							if (!args?.page || args.page === 1) {
+								return incoming;
+							}
+
+							return {
+								...incoming,
+								results: [
+									...(existing?.results || []),
+									...(incoming?.results || []),
+								],
+							};
+						},
+					},
 				},
 			},
 		},

@@ -15,3 +15,9 @@ export interface LocationStats {
   residentCount: number;
   dimension: string;
 }
+
+export interface LocationFilter {
+  name?: string;
+  type?: string;
+  dimension?: string;
+}
