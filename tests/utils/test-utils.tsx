@@ -14,11 +14,7 @@ function AllTheProviders({
 	children: ReactNode;
 	mocks?: MockedResponse[];
 }) {
-	return (
-		<MockedProvider mocks={mocks} addTypename={false}>
-			{children}
-		</MockedProvider>
-	);
+	return <MockedProvider mocks={mocks}>{children}</MockedProvider>;
 }
 
 export function renderWithProviders(
