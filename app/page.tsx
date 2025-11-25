@@ -1,7 +1,7 @@
 "use client";
 
-import { IconArrowRight, IconChartDonut, IconUsers } from "@tabler/icons-react";
-import Link from "next/link";
+import { IconChartDonut, IconMapPin, IconUsers } from "@tabler/icons-react";
+import { FeatureCard } from "@/components/molecules/FeatureCard";
 
 export default function Home() {
   return (
@@ -22,54 +22,41 @@ export default function Home() {
               operations across infinite realities
             </p>
 
-            <div className="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto">
-              <Link
-                href="/characters"
-                className="group bg-surface border-2 border-DEFAULT hover:border-brand rounded-xl p-8 transition-all hover:shadow-portal hover:scale-105"
-              >
-                <div className="flex flex-col items-center gap-4">
-                  <div className="w-20 h-20 rounded-full bg-interactive-primary shadow-portal group-hover:shadow-portal-lg transition-all flex items-center justify-center">
-                    <IconUsers size={32} />
-                  </div>
-                  <div>
-                    <h3 className="text-2xl font-display text-brand mb-2">
-                      Browse Characters
-                    </h3>
-                    <p className="text-secondary text-sm">
-                      Search and explore the multiverse character database with
-                      infinite scroll
-                    </p>
-                  </div>
-                  <div className="mt-4 flex items-center gap-2 text-brand group-hover:gap-3 transition-all">
-                    <span className="font-display">Explore Now</span>
-                    <IconArrowRight size={20} />
-                  </div>
-                </div>
-              </Link>
+            <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+              <FeatureCard href="/characters">
+                <FeatureCard.Icon>
+                  <IconUsers size={32} />
+                </FeatureCard.Icon>
+                <FeatureCard.Title>Browse Characters</FeatureCard.Title>
+                <FeatureCard.Description>
+                  Search and explore the multiverse character database with
+                  infinite scroll
+                </FeatureCard.Description>
+                <FeatureCard.Action>Explore Now</FeatureCard.Action>
+              </FeatureCard>
 
-              <Link
-                href="/analytics"
-                className="group bg-surface border-2 border-DEFAULT hover:border-brand rounded-xl p-8 transition-all hover:shadow-portal hover:scale-105"
-              >
-                <div className="flex flex-col items-center gap-4">
-                  <div className="w-20 h-20 rounded-full bg-interactive-primary shadow-portal group-hover:shadow-portal-lg transition-all flex items-center justify-center">
-                    <IconChartDonut size={32} />
-                  </div>
-                  <div>
-                    <h3 className="text-2xl font-display text-brand mb-2">
-                      View Statistics
-                    </h3>
-                    <p className="text-secondary text-sm">
-                      Analyze location data and population statistics across
-                      dimensions
-                    </p>
-                  </div>
-                  <div className="mt-4 flex items-center gap-2 text-brand group-hover:gap-3 transition-all">
-                    <span className="font-display">View Charts</span>
-                    <IconArrowRight size={20} />
-                  </div>
-                </div>
-              </Link>
+              <FeatureCard href="/locations">
+                <FeatureCard.Icon>
+                  <IconMapPin size={32} />
+                </FeatureCard.Icon>
+                <FeatureCard.Title>Explore Locations</FeatureCard.Title>
+                <FeatureCard.Description>
+                  Discover and navigate through locations across the multiverse
+                </FeatureCard.Description>
+                <FeatureCard.Action>Discover</FeatureCard.Action>
+              </FeatureCard>
+
+              <FeatureCard href="/analytics">
+                <FeatureCard.Icon>
+                  <IconChartDonut size={32} />
+                </FeatureCard.Icon>
+                <FeatureCard.Title>View Statistics</FeatureCard.Title>
+                <FeatureCard.Description>
+                  Analyze location data and population statistics across
+                  dimensions
+                </FeatureCard.Description>
+                <FeatureCard.Action>View Charts</FeatureCard.Action>
+              </FeatureCard>
             </div>
           </div>
         </div>
