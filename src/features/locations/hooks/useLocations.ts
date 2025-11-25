@@ -2,7 +2,7 @@
 
 import { useQuery } from "@apollo/client/react";
 import type { Location, LocationFilter } from "@/types/location";
-import { GET_LOCATIONS } from "../api/queries";
+import { GET_LOCATIONS } from "../api";
 
 export interface LocationsQueryResponse {
 	locations: {

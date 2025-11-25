@@ -3,7 +3,7 @@
 import { useQuery } from "@apollo/client/react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { Location } from "@/types/location";
-import { GET_LOCATIONS } from "../api/queries";
+import { GET_LOCATIONS } from "../api";
 import {
 	mergeLocations,
 	transformLocationsToStats,
