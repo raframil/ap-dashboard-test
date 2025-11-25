@@ -1,6 +1,6 @@
 "use client";
 
-import { IconFlask2Filled, IconMenu2, IconX } from "@tabler/icons-react";
+import { IconMenu2, IconX } from "@tabler/icons-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
@@ -12,6 +12,7 @@ export function Navigation() {
   const links = [
     { href: "/", label: "Home" },
     { href: "/characters", label: "Characters" },
+    { href: "/locations", label: "Locations" },
     { href: "/analytics", label: "Analytics" },
   ];
 

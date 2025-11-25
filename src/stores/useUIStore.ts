@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import type { Character } from "@/types/character";
+import type { Location } from "@/types/location";
 
 type PersistedUIState = {
 	isSpoilerModeEnabled: boolean;
@@ -10,12 +11,16 @@ type PersistedUIState = {
 interface UIStore {
 	selectedCharacter: Character | null;
 	isCharacterModalOpen: boolean;
+	selectedLocation: Location | null;
+	isLocationModalOpen: boolean;
 	searchQuery: string;
 	isSpoilerModeEnabled: boolean;
 	revealedCharacters: Set<string>;
 	setSelectedCharacter: (character: Character | null) => void;
 	openCharacterModal: (character: Character) => void;
 	closeCharacterModal: () => void;
+	openLocationModal: (location: Location) => void;
+	closeLocationModal: () => void;
 	setSearchQuery: (query: string) => void;
 	toggleSpoilerMode: () => void;
 	revealCharacter: (characterId: string) => void;
@@ -29,6 +34,8 @@ export const useUIStore = create<UIStore>()(
 		(set, get) => ({
 			selectedCharacter: null,
 			isCharacterModalOpen: false,
+			selectedLocation: null,
+			isLocationModalOpen: false,
 			searchQuery: "",
 			isSpoilerModeEnabled: false,
 			revealedCharacters: new Set<string>(),
@@ -38,6 +45,10 @@ export const useUIStore = create<UIStore>()(
 				set({ selectedCharacter: character, isCharacterModalOpen: true }),
 			closeCharacterModal: () =>
 				set({ isCharacterModalOpen: false, selectedCharacter: null }),
+			openLocationModal: (location) =>
+				set({ selectedLocation: location, isLocationModalOpen: true }),
+			closeLocationModal: () =>
+				set({ isLocationModalOpen: false, selectedLocation: null }),
 			setSearchQuery: (query) => set({ searchQuery: query }),
 			toggleSpoilerMode: () =>
 				set((state) => ({
