@@ -1,32 +1,110 @@
 "use client";
 
 import { useQuery } from "@apollo/client/react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import type {
+	Location,
+	LocationStats,
+} from "@/types/location";
 import { GET_LOCATIONS } from "../api/queries";
-import type { LocationsResponse, LocationStats } from "@/types/location";
-import { useMemo } from "react";
+
+export interface LocationsQueryResponse {
+	locations: {
+		info: {
+		count: number;
+		pages: number;
+		next: number | null;
+		prev: number | null;
+		};
+		results: Location[];
+	};
+}
+
+function mergeLocations(prev: Location[], next: Location[]): Location[] {
+	const map = new Map(prev.map((location) => [location.id, location]));
+	next.forEach((location) => { map.set(location.id, location); });
+	return Array.from(map.values());
+}
 
 export function useLocationStats() {
-  const { data, loading, error } = useQuery<LocationsResponse>(GET_LOCATIONS, {
-    variables: { page: 1 },
-  });
+	const { data, loading, error, fetchMore } = useQuery<LocationsQueryResponse>(
+		GET_LOCATIONS,
+		{ variables: { page: 1 } },
+	);
 
-  const stats: LocationStats[] = useMemo(() => {
-    if (!data?.locations.results) return [];
+	const [allLocations, setAllLocations] = useState<Location[]>([]);
+	const [fullyLoaded, setFullyLoaded] = useState(false);
+	const prefetchStartedRef = useRef(false);
 
-    return data.locations.results
-      .map((location) => ({
-        name: location.name,
-        residentCount: location.residents.length,
-        dimension: location.dimension || "Unknown",
-      }))
-      .filter((stat) => stat.residentCount > 0)
-      .sort((a, b) => b.residentCount - a.residentCount)
-      .slice(0, 10); // Top 10 locations
-  }, [data]);
+	useEffect(() => {
+		if (!data?.locations) return;
 
-  return {
-    stats,
-    loading,
-    error,
-  };
+		setAllLocations((prev) =>
+			mergeLocations(prev, data.locations.results ?? []),
+		);
+
+		if (prefetchStartedRef.current) return;
+		prefetchStartedRef.current = true;
+
+		const totalPages = data.locations.info.pages ?? 1;
+
+		let cancelled = false;
+
+		async function prefetchAllPages() {
+			for (let page = 2; page <= totalPages && !cancelled; page++) {
+				try {
+					const { data: more } = await fetchMore({
+						variables: { page },
+					});
+
+					if (more?.locations?.results) {
+						setAllLocations((prev) =>
+							mergeLocations(prev, more.locations.results),
+						);
+					}
+				} catch (err) {
+					console.error("Error prefetching page", page, err);
+					break;
+				}
+			}
+
+			if (!cancelled) {
+				setFullyLoaded(true);
+			}
+		}
+
+		if (totalPages > 1) {
+			void prefetchAllPages();
+		} else {
+			setFullyLoaded(true);
+		}
+
+		return () => {
+			cancelled = true;
+		};
+	}, [data, fetchMore]);
+
+	const stats: LocationStats[] = useMemo(() => {
+		const locationsSource =
+			allLocations.length > 0 ? allLocations : (data?.locations?.results ?? []);
+
+		if (!locationsSource.length) return [];
+
+		return locationsSource
+			.map((location) => ({
+				name: location.name,
+				residentCount: location.residents.length,
+				dimension: location.dimension || "Unknown",
+			}))
+			.filter((stat) => stat.residentCount > 0)
+			.sort((a, b) => b.residentCount - a.residentCount)
+			.slice(0, 10);
+	}, [allLocations, data]);
+
+	return {
+		stats,
+		loadingFirstPage: loading,
+		fullyLoaded,
+		error,
+	};
 }
