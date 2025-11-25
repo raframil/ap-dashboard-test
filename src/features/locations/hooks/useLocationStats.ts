@@ -2,28 +2,23 @@
 
 import { useQuery } from "@apollo/client/react";
 import { useEffect, useMemo, useRef, useState } from "react";
-import type {
-	Location,
-	LocationStats,
-} from "@/types/location";
+import type { Location } from "@/types/location";
 import { GET_LOCATIONS } from "../api/queries";
+import {
+	mergeLocations,
+	transformLocationsToStats,
+} from "../utils/locationHelpers";
 
 export interface LocationsQueryResponse {
 	locations: {
 		info: {
-		count: number;
-		pages: number;
-		next: number | null;
-		prev: number | null;
+			count: number;
+			pages: number;
+			next: number | null;
+			prev: number | null;
 		};
 		results: Location[];
 	};
-}
-
-function mergeLocations(prev: Location[], next: Location[]): Location[] {
-	const map = new Map(prev.map((location) => [location.id, location]));
-	next.forEach((location) => { map.set(location.id, location); });
-	return Array.from(map.values());
 }
 
 export function useLocationStats() {
@@ -33,8 +28,9 @@ export function useLocationStats() {
 	);
 
 	const [allLocations, setAllLocations] = useState<Location[]>([]);
-	const [fullyLoaded, setFullyLoaded] = useState(false);
-	const prefetchStartedRef = useRef(false);
+	const [fullyLoaded, setFullyLoaded] = useState<boolean>(false);
+	const [prefetchError, setPrefetchError] = useState<Error | null>(null);
+	const prefetchStartedRef = useRef<boolean>(false);
 
 	useEffect(() => {
 		if (!data?.locations) return;
@@ -46,11 +42,11 @@ export function useLocationStats() {
 		if (prefetchStartedRef.current) return;
 		prefetchStartedRef.current = true;
 
-		const totalPages = data.locations.info.pages ?? 1;
+		const totalPages: number = data.locations.info.pages ?? 1;
 
-		let cancelled = false;
+		let cancelled: boolean = false;
 
-		async function prefetchAllPages() {
+		async function prefetchAllPages(): Promise<void> {
 			for (let page = 2; page <= totalPages && !cancelled; page++) {
 				try {
 					const { data: more } = await fetchMore({
@@ -64,6 +60,7 @@ export function useLocationStats() {
 					}
 				} catch (err) {
 					console.error("Error prefetching page", page, err);
+					setPrefetchError(err instanceof Error ? err : new Error(String(err)));
 					break;
 				}
 			}
@@ -84,27 +81,17 @@ export function useLocationStats() {
 		};
 	}, [data, fetchMore]);
 
-	const stats: LocationStats[] = useMemo(() => {
+	const stats = useMemo(() => {
 		const locationsSource =
 			allLocations.length > 0 ? allLocations : (data?.locations?.results ?? []);
 
-		if (!locationsSource.length) return [];
-
-		return locationsSource
-			.map((location) => ({
-				name: location.name,
-				residentCount: location.residents.length,
-				dimension: location.dimension || "Unknown",
-			}))
-			.filter((stat) => stat.residentCount > 0)
-			.sort((a, b) => b.residentCount - a.residentCount)
-			.slice(0, 10);
+		return transformLocationsToStats(locationsSource);
 	}, [allLocations, data]);
 
 	return {
 		stats,
 		loadingFirstPage: loading,
 		fullyLoaded,
-		error,
+		error: (error || prefetchError) ?? null,
 	};
 }
