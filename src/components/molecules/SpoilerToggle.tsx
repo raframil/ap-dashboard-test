@@ -45,12 +45,14 @@ export function SpoilerToggle() {
 				onClick={toggleSpoilerMode}
 				variant={isSpoilerModeEnabled ? "secondary" : "primary"}
 				size="sm"
-				aria-label={isSpoilerModeEnabled ? "Hide spoilers" : "Show spoilers"}
+				aria-label={
+					isSpoilerModeEnabled ? "Show all spoilers" : "Hide spoilers"
+				}
 				className="w-fit"
 			>
 				<div className="flex items-center gap-2">
 					{renderCorrectEyeIcon()}
-					{isSpoilerModeEnabled ? "Spoilers Hidden" : "Spoilers Shown"}
+					{isSpoilerModeEnabled ? "Hide Spoilers" : "Show All"}
 				</div>
 			</Button>
 
