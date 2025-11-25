@@ -37,7 +37,7 @@ export const useUIStore = create<UIStore>()(
 			selectedLocation: null,
 			isLocationModalOpen: false,
 			searchQuery: "",
-			isSpoilerModeEnabled: false,
+			isSpoilerModeEnabled: true,
 			revealedCharacters: new Set<string>(),
 			setSelectedCharacter: (character) =>
 				set({ selectedCharacter: character }),
@@ -69,7 +69,7 @@ export const useUIStore = create<UIStore>()(
 			clearRevealedCharacters: () => set({ revealedCharacters: new Set() }),
 			isCharacterRevealed: (id) => {
 				const state = get();
-				return !state.isSpoilerModeEnabled || state.revealedCharacters.has(id);
+				return state.isSpoilerModeEnabled && state.revealedCharacters.has(id);
 			},
 		}),
 		{
