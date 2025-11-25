@@ -1,12 +1,24 @@
 "use client";
 
 import { useQuery } from "@apollo/client/react";
-import type { CharacterFilter, CharactersResponse } from "@/types/character";
+import type { Character, CharacterFilter } from "@/types/character";
 import { GET_CHARACTERS } from "../api/queries";
+
+export interface CharactersQueryResponse {
+	characters: {
+	  info: {
+		count: number;
+		pages: number;
+		next: number | null;
+		prev: number | null;
+	  };
+	  results: Character[];
+	};
+  }	
 
 export function useCharacters(filter?: CharacterFilter) {
 	const { data, loading, error, fetchMore, refetch } =
-		useQuery<CharactersResponse>(GET_CHARACTERS, {
+		useQuery<CharactersQueryResponse>(GET_CHARACTERS, {
 			variables: {
 				page: 1,
 				filter: filter || {},
