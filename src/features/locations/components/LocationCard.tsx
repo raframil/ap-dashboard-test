@@ -40,7 +40,7 @@ export function LocationCard({ location, onClick }: LocationCardProps) {
 					<p className="text-sm text-secondary mb-3 truncate">
 						{location.type}
 					</p>
-					<div className="flex flex-wrap gap-2">
+					<div className="flex flex-wrap gap-2 overflow-hidden">
 						<Badge variant="default">{location.dimension}</Badge>
 						<Badge variant="info">
 							<IconUsers size={14} className="inline mr-1" />

@@ -2,11 +2,11 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { FeatureCardAction } from "./FeatureCardAction";
 import { FeatureCardContext } from "./FeatureCardContext";
+import { FeatureCardDescription } from "./FeatureCardDescription";
 import { FeatureCardIcon } from "./FeatureCardIcon";
 import { FeatureCardTitle } from "./FeatureCardTitle";
-import { FeatureCardDescription } from "./FeatureCardDescription";
-import { FeatureCardAction } from "./FeatureCardAction";
 
 interface FeatureCardProps {
 	href: string;
@@ -33,13 +33,14 @@ export function FeatureCard({
 				onMouseEnter={() => setIsHovered(true)}
 				onMouseLeave={() => setIsHovered(false)}
 			>
-				<div className="flex flex-col items-center gap-4">{children}</div>
+				<div className="flex flex-col items-center gap-4 h-full">
+					{children}
+				</div>
 			</Link>
 		</FeatureCardContext.Provider>
 	);
 }
 
-// Attach sub-components
 FeatureCard.Icon = FeatureCardIcon;
 FeatureCard.Title = FeatureCardTitle;
 FeatureCard.Description = FeatureCardDescription;

@@ -1,8 +1,4 @@
-import {
-	VictoryContainer,
-	VictoryPie,
-	VictoryTooltip,
-} from "victory";
+import { VictoryContainer, VictoryPie, VictoryTooltip } from "victory";
 
 interface ChartDatum {
 	x: string;

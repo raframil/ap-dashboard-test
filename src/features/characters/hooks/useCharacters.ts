@@ -6,15 +6,15 @@ import { GET_CHARACTERS } from "../api/queries";
 
 export interface CharactersQueryResponse {
 	characters: {
-	  info: {
-		count: number;
-		pages: number;
-		next: number | null;
-		prev: number | null;
-	  };
-	  results: Character[];
+		info: {
+			count: number;
+			pages: number;
+			next: number | null;
+			prev: number | null;
+		};
+		results: Character[];
 	};
-  }	
+}
 
 export function useCharacters(filter?: CharacterFilter) {
 	const { data, loading, error, fetchMore, refetch } =

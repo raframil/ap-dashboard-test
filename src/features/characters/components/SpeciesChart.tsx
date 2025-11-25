@@ -17,7 +17,7 @@ export function SpeciesChart() {
 		? Object.entries(result).map(([species, count]) => ({
 				species,
 				count: count.info.count,
-		  }))
+			}))
 		: [];
 
 	return (

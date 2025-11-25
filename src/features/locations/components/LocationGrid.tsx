@@ -73,7 +73,9 @@ export function LocationGrid({ filter }: LocationGridProps) {
 
 			{!hasMore && locations.length > 0 && (
 				<div className="flex flex-col items-center justify-center gap-4 py-8">
-					<span className="text-2xl font-display text-brand">Congratulations!</span>
+					<span className="text-2xl font-display text-brand">
+						Congratulations!
+					</span>
 					<p className="text-center text-muted">
 						You have explored all locations in the multiverse
 					</p>

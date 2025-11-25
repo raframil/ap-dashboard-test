@@ -9,11 +9,8 @@ import { SpoilerBadge } from "@/components/molecules/SpoilerBadge";
 import { useUIStore } from "@/stores/useUIStore";
 
 export function CharacterModal() {
-	const {
-		selectedCharacter,
-		isCharacterModalOpen,
-		closeCharacterModal,
-	} = useUIStore();
+	const { selectedCharacter, isCharacterModalOpen, closeCharacterModal } =
+		useUIStore();
 
 	useEffect(() => {
 		if (isCharacterModalOpen) {
@@ -91,7 +88,10 @@ export function CharacterModal() {
 								{selectedCharacter.name}
 							</h2>
 							<div className="flex flex-wrap gap-2">
-								<SpoilerBadge characterId={selectedCharacter.id} status={selectedCharacter.status} />
+								<SpoilerBadge
+									characterId={selectedCharacter.id}
+									status={selectedCharacter.status}
+								/>
 								<Badge variant="default">{selectedCharacter.species}</Badge>
 								{selectedCharacter.type && (
 									<Badge variant="info">{selectedCharacter.type}</Badge>

@@ -83,7 +83,7 @@ export function LocationModal() {
 							>
 								{selectedLocation.name}
 							</h2>
-							<div className="flex flex-wrap gap-2">
+							<div className="flex flex-wrap gap-2 overflow-hidden">
 								<Badge variant="default">{selectedLocation.type}</Badge>
 								<Badge variant="info">{selectedLocation.dimension}</Badge>
 							</div>
@@ -141,7 +141,9 @@ export function LocationModal() {
 					{selectedLocation.residents &&
 						selectedLocation.residents.length === 0 && (
 							<div className="bg-surface border border-DEFAULT rounded-lg p-6 text-center">
-								<p className="text-muted">No known residents in this location</p>
+								<p className="text-muted">
+									No known residents in this location
+								</p>
 							</div>
 						)}
 				</div>

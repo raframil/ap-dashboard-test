@@ -4,8 +4,9 @@ interface FeatureCardContextValue {
 	isHovered: boolean;
 }
 
-export const FeatureCardContext =
-	createContext<FeatureCardContextValue | null>(null);
+export const FeatureCardContext = createContext<FeatureCardContextValue | null>(
+	null,
+);
 
 export function useFeatureCardContext() {
 	const context = useContext(FeatureCardContext);

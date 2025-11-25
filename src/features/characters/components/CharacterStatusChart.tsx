@@ -43,7 +43,11 @@ export function CharacterStatusChart() {
 			<VictoryPieChartWrapper
 				data={chartData}
 				colorScale={colorScale}
-				labelFormatter={(datum) => formatLabel(datum as unknown as { x: string; y: number; percentage: number })}
+				labelFormatter={(datum) =>
+					formatLabel(
+						datum as unknown as { x: string; y: number; percentage: number },
+					)
+				}
 				innerRadius={100}
 			/>
 			<p className="text-sm text-muted text-center">

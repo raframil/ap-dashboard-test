@@ -48,15 +48,15 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 			>
 				{isLoading ? (
 					<span className="flex items-center gap-2">
-            <IconLoader2 size={16} className="animate-spin" />
-            {children}
-          </span>
-        ) : (
-          children
-        )}
-      </button>
-    );
-  },
+						<IconLoader2 size={16} className="animate-spin" />
+						{children}
+					</span>
+				) : (
+					children
+				)}
+			</button>
+		);
+	},
 );
 
-Button.displayName = 'Button';
+Button.displayName = "Button";

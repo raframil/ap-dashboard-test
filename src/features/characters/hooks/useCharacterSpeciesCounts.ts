@@ -5,42 +5,45 @@ import { COUNT_CHARACTERS_SPECIES } from "../api/count-species";
 
 export interface SpeciesCountsQueryResponse {
 	Human: {
-	  info: {
-		count: number;
-	  };
+		info: {
+			count: number;
+		};
 	};
 	Alien: {
-	  info: {
-		count: number;
-	  };
+		info: {
+			count: number;
+		};
 	};
 	Humanoid: {
-	  info: {
-		count: number;
-	  };
+		info: {
+			count: number;
+		};
 	};
 	Animal: {
-	  info: {
-		count: number;
-	  };
+		info: {
+			count: number;
+		};
 	};
 	Robot: {
-	  info: {
-		count: number;
-	  };
+		info: {
+			count: number;
+		};
 	};
-  }
+}
 
 export function useCharacterSpeciesCounts() {
-	const countsQuery = useQuery<SpeciesCountsQueryResponse>(COUNT_CHARACTERS_SPECIES, {
-		fetchPolicy: "cache-first",
-	});
+	const countsQuery = useQuery<SpeciesCountsQueryResponse>(
+		COUNT_CHARACTERS_SPECIES,
+		{
+			fetchPolicy: "cache-first",
+		},
+	);
 
 	const loading = countsQuery.loading;
 	const error = countsQuery.error;
 
 	return {
-		result: countsQuery.data,
+		result: countsQuery.data ?? null,
 		loading,
 		error,
 	};

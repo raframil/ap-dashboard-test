@@ -61,7 +61,10 @@ export function SearchInput({
 						aria-label="Clear search"
 						type="button"
 					>
-						<IconX size={24} className="text-muted hover:text-primary transition-colors" />
+						<IconX
+							size={24}
+							className="text-muted hover:text-primary transition-colors"
+						/>
 					</button>
 				)}
 			</div>

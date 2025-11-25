@@ -73,7 +73,9 @@ export function CharacterGrid({ filter }: CharacterGridProps) {
 
 			{!hasMore && characters.length > 0 && (
 				<div className="flex flex-col items-center justify-center gap-4 py-8">
-					<span className="text-2xl font-display text-brand">Congratulations!</span>
+					<span className="text-2xl font-display text-brand">
+						Congratulations!
+					</span>
 					<p className="text-center text-muted">
 						You have reached the end of the multiverse
 					</p>

@@ -58,9 +58,7 @@ export function ChartContainer({
 		<div className="bg-surface border border-DEFAULT rounded-lg p-6 shadow-card">
 			<div className="mb-4">
 				<h3 className="text-2xl font-display text-primary">{title}</h3>
-				{subtitle && (
-					<p className="text-sm text-muted mt-2">{subtitle}</p>
-				)}
+				{subtitle && <p className="text-sm text-muted mt-2">{subtitle}</p>}
 			</div>
 			<div className="w-full" style={{ height }}>
 				{children}

@@ -37,9 +37,7 @@ export function LocationChart() {
 			<VictoryPieChartWrapper
 				data={chartData}
 				colorScale={LOCATION_COLORS}
-				labelFormatter={(datum) =>
-					`${datum.x}\n${datum.y} residents`
-				}
+				labelFormatter={(datum) => `${datum.x}\n${datum.y} residents`}
 			/>
 			<p className="text-sm text-muted text-center">
 				Showing top 10 locations by resident count

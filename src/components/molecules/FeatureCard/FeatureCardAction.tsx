@@ -19,7 +19,7 @@ export function FeatureCardAction({
 	return (
 		<div
 			className={`
-        mt-4 flex items-center text-brand transition-all
+        mt-auto flex items-center text-brand transition-all
         ${isHovered ? "gap-3" : "gap-2"}
         ${className}
       `}

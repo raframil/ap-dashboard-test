@@ -82,7 +82,8 @@ export const useUIStore = create<UIStore>()(
 				const state = persistedState as Partial<PersistedUIState>;
 				return {
 					...currentState,
-					isSpoilerModeEnabled: state.isSpoilerModeEnabled ?? currentState.isSpoilerModeEnabled,
+					isSpoilerModeEnabled:
+						state.isSpoilerModeEnabled ?? currentState.isSpoilerModeEnabled,
 					revealedCharacters: new Set(state.revealedCharacters || []),
 				};
 			},

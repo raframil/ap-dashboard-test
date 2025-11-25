@@ -5,27 +5,29 @@ import { COUNT_CHARACTERS_STATUSES } from "../api/count-status";
 
 export interface StatusCountsQueryResponse {
 	Alive: {
-	  info: {
-		count: number;
-	  };
+		info: {
+			count: number;
+		};
 	};
 	Dead: {
-	  info: {
-		count: number;
-	  };
+		info: {
+			count: number;
+		};
 	};
 	Unknown: {
-	  info: {
-		count: number;
-	  };
+		info: {
+			count: number;
+		};
 	};
-  }
+}
 
 export function useCharacterStatusCounts() {
-	const countsQuery = useQuery<StatusCountsQueryResponse>(COUNT_CHARACTERS_STATUSES, {
-		fetchPolicy: "cache-first",
-	});
-
+	const countsQuery = useQuery<StatusCountsQueryResponse>(
+		COUNT_CHARACTERS_STATUSES,
+		{
+			fetchPolicy: "cache-first",
+		},
+	);
 
 	const loading = countsQuery.loading;
 	const error = countsQuery.error;
@@ -38,9 +40,17 @@ export function useCharacterStatusCounts() {
 
 	return {
 		stats: [
-			{ status: "Alive", count: aliveCount, percentage: aliveCount / totalCount },
+			{
+				status: "Alive",
+				count: aliveCount,
+				percentage: aliveCount / totalCount,
+			},
 			{ status: "Dead", count: deadCount, percentage: deadCount / totalCount },
-			{ status: "unknown", count: unknownCount, percentage: unknownCount / totalCount },
+			{
+				status: "unknown",
+				count: unknownCount,
+				percentage: unknownCount / totalCount,
+			},
 		],
 		loading,
 		error,

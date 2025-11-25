@@ -13,7 +13,8 @@ interface CharacterCardProps {
 
 export function CharacterCard({ character, onClick }: CharacterCardProps) {
 	return (
-		<button
+		// biome-ignore lint/a11y/useSemanticElements: we need to use a div here because we have a children button
+		<div
 			onClick={() => onClick?.(character)}
 			onKeyDown={(e) => {
 				if (e.key === "Enter" || e.key === " ") {
@@ -29,7 +30,7 @@ export function CharacterCard({ character, onClick }: CharacterCardProps) {
 				shadow-default hover:shadow-portal
 				text-left group cursor-pointer
       		`}
-			type="button"
+			role="button"
 		>
 			<div className="flex items-start gap-4">
 				<Avatar
@@ -47,7 +48,10 @@ export function CharacterCard({ character, onClick }: CharacterCardProps) {
 						{character.type && ` - ${character.type}`}
 					</p>
 					<div className="flex flex-wrap gap-2">
-						<SpoilerBadge characterId={character.id} status={character.status} />
+						<SpoilerBadge
+							characterId={character.id}
+							status={character.status}
+						/>
 						<Badge variant="default">{character.gender}</Badge>
 					</div>
 					{character.location && (
@@ -57,6 +61,6 @@ export function CharacterCard({ character, onClick }: CharacterCardProps) {
 					)}
 				</div>
 			</div>
-		</button>
+		</div>
 	);
 }
