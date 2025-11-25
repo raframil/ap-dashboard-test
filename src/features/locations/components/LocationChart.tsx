@@ -1,11 +1,8 @@
 "use client";
 
 import {
-	VictoryAxis,
-	VictoryBar,
-	VictoryChart,
 	VictoryContainer,
-	VictoryTheme,
+	VictoryPie,
 	VictoryTooltip,
 } from "victory";
 import { Spinner } from "@/components/atoms/Spinner";
@@ -41,66 +38,56 @@ export function LocationChart() {
 				Top Locations by Population
 			</h3>
 			<div className="w-full" style={{ height: 400 }}>
-				<VictoryChart
-					theme={VictoryTheme.material}
-					domainPadding={{ x: 30 }}
-					padding={{ top: 20, bottom: 80, left: 60, right: 20 }}
-					containerComponent={<VictoryContainer responsive={true} />}
-				>
-					<VictoryAxis
-						style={{
-							axis: { stroke: "#232766" },
-							tickLabels: {
-								fontSize: 10,
-								fill: "#d6daff",
-								angle: -45,
-								textAnchor: "end",
-							},
-							grid: { stroke: "transparent" },
-						}}
-					/>
-					<VictoryAxis
-						dependentAxis
-						style={{
-							axis: { stroke: "#232766" },
-							tickLabels: { fontSize: 12, fill: "#d6daff" },
-							grid: { stroke: "#1a1a42", strokeDasharray: "5,5" },
-						}}
-					/>
-					<VictoryBar
-						data={stats}
-						x="name"
-						y="residentCount"
-						style={{
-							data: {
-								fill: "#3cffaa",
-								fillOpacity: 0.8,
-								stroke: "#6cffb8",
+				<VictoryPie
+					data={stats}
+					x="name"
+					y="residentCount"
+					colorScale={[
+						"#3cffaa",
+						"#ff6b9d",
+						"#ffa500",
+						"#00d4ff",
+						"#c44569",
+						"#6c5ce7",
+						"#fdcb6e",
+						"#00b894",
+						"#e17055",
+						"#a29bfe",
+					]}
+					labels={({ datum }) =>
+						`${datum.name}\n${datum.residentCount} residents`
+					}
+					labelComponent={
+						<VictoryTooltip
+							style={{
+								fontSize: 12,
+								fill: "#f5f7ff",
+							}}
+							flyoutStyle={{
+								fill: "#0a0622",
+								stroke: "#3cffaa",
 								strokeWidth: 2,
-							},
-						}}
-						labels={({ datum }) => `${datum.residentCount} residents`}
-						labelComponent={
-							<VictoryTooltip
-								style={{
-									fontSize: 12,
-									fill: "#f5f7ff",
-								}}
-								flyoutStyle={{
-									fill: "#0a0622",
-									stroke: "#3cffaa",
-									strokeWidth: 2,
-								}}
-								cornerRadius={8}
-								pointerLength={8}
-							/>
-						}
-						animate={{
-							duration: 1000,
-							onLoad: { duration: 500 },
-						}}
-					/>
-				</VictoryChart>
+							}}
+							cornerRadius={8}
+							pointerLength={8}
+						/>
+					}
+					style={{
+						data: {
+							stroke: "#6cffb8",
+							strokeWidth: 2,
+						},
+						labels: {
+							fill: "#f5f7ff",
+							fontSize: 11,
+						},
+					}}
+					containerComponent={<VictoryContainer responsive={true} />}
+					animate={{
+						duration: 1000,
+						onLoad: { duration: 500 },
+					}}
+				/>
 			</div>
 			<p className="text-sm text-muted mt-4 text-center">
 				Showing top 10 locations by resident count
