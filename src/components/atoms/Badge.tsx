@@ -13,6 +13,7 @@ export function Badge({
 	onClick,
 	onMouseEnter,
 	onMouseLeave,
+	...props
 }: BadgeProps) {
 	const variantStyles = {
 		success: "bg-success/10 text-success border-success/20",
@@ -22,21 +23,45 @@ export function Badge({
 		default: "bg-surface-hover text-secondary border-DEFAULT",
 	};
 
-	return (
-		<button
-			className={`
-        inline-flex items-center px-3 py-1
-        text-sm font-medium rounded-full
-        border
-        ${variantStyles[variant]}
-        ${className}
-      `}
-			onClick={onClick}
-			onMouseEnter={onMouseEnter}
-			onMouseLeave={onMouseLeave}
-			type="button"
-		>
+	const badgeClasses = `
+		inline-flex items-center px-3 py-1
+		rounded-full
+		border
+		${onClick ? "cursor-pointer" : "cursor-default"}
+		${variantStyles[variant]}
+		${className}
+	`;
+
+	const content = (
+		<span className="text-xs md:text-sm font-medium w-full truncate">
 			{children}
-		</button>
+		</span>
+	);
+
+	if (onClick || onMouseEnter || onMouseLeave) {
+		return (
+			<button
+				className={badgeClasses}
+				onClick={onClick}
+				onMouseEnter={onMouseEnter}
+				onMouseLeave={onMouseLeave}
+				type="button"
+				title={typeof children === "string" ? children : undefined}
+				aria-label={typeof children === "string" ? children : undefined}
+				{...props}
+			>
+				{content}
+			</button>
+		);
+	}
+
+	return (
+		<span
+			className={badgeClasses}
+			title={typeof children === "string" ? children : undefined}
+			{...props}
+		>
+			{content}
+		</span>
 	);
 }
