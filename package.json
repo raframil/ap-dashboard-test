@@ -12,7 +12,8 @@
 		"test": "vitest",
 		"test:ui": "vitest --ui",
 		"test:run": "vitest run",
-		"test:coverage": "vitest run --coverage"
+		"test:coverage": "vitest run --coverage",
+		"prepare": "husky"
 	},
 	"dependencies": {
 		"@apollo/client": "^4.0.9",
@@ -34,6 +35,7 @@
 		"@types/react": "^19",
 		"@types/react-dom": "^19",
 		"@vitejs/plugin-react": "^5.1.1",
+		"husky": "^9.1.7",
 		"jsdom": "^27.2.0",
 		"tailwindcss": "^4",
 		"typescript": "^5",
