@@ -2,7 +2,7 @@
 
 import { useQuery } from "@apollo/client/react";
 import type { Character, CharacterFilter } from "@/types/character";
-import { GET_CHARACTERS } from "../api/queries";
+import { GET_CHARACTERS } from "../api";
 
 export interface CharactersQueryResponse {
 	characters: {
