@@ -6,6 +6,18 @@ afterEach(() => {
 	cleanup();
 });
 
+vi.mock("next/navigation", () => ({
+	useSearchParams: () => ({
+		get: () => null,
+	}),
+	useRouter: () => ({
+		push: vi.fn(),
+		replace: vi.fn(),
+		back: vi.fn(),
+	}),
+	usePathname: () => "/",
+}));
+
 global.IntersectionObserver = class IntersectionObserver {
 	disconnect(): void {}
 	observe(): void {}
