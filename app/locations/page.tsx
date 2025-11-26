@@ -1,18 +1,9 @@
-"use client";
-
-import { useState } from "react";
-import { SearchInput } from "@/components/molecules/SearchInput";
 import { PageHeader } from "@/components/organisms/PageHeader";
+import { SearchSection } from "@/components/organisms/SearchSection";
 import { LocationModal } from "@/features/location-details/components/LocationModal";
 import { LocationGrid } from "@/features/locations/components/LocationGrid";
 
 export default function LocationsPage() {
-	const [searchTerm, setSearchTerm] = useState("");
-
-	const handleSearch = (query: string) => {
-		setSearchTerm(query);
-	};
-
 	return (
 		<div
 			className="min-h-screen bg-space-950"
@@ -24,15 +15,9 @@ export default function LocationsPage() {
 					subtitle="Discover and explore locations across the multiverse"
 				/>
 
-				<div className="mt-8 mb-12 max-w-2xl">
-					<SearchInput
-						onSearch={handleSearch}
-						placeholder="Search for locations across dimensions..."
-						debounceMs={300}
-					/>
-				</div>
+				<SearchSection placeholder="Search for locations across dimensions..." />
 
-				<LocationGrid filter={searchTerm ? { name: searchTerm } : undefined} />
+				<LocationGrid />
 			</div>
 
 			<LocationModal />

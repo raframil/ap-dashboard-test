@@ -1,5 +1,3 @@
-"use client";
-
 import { PageHeader } from "@/components/organisms/PageHeader";
 import { CharacterStatusChart } from "@/features/characters/components/CharacterStatusChart";
 import { SpeciesChart } from "@/features/characters/components/SpeciesChart";

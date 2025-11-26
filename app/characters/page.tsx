@@ -1,19 +1,10 @@
-"use client";
-
-import { useState } from "react";
-import { SearchInput } from "@/components/molecules/SearchInput";
 import { SpoilerToggle } from "@/components/molecules/SpoilerToggle";
 import { PageHeader } from "@/components/organisms/PageHeader";
+import { SearchSection } from "@/components/organisms/SearchSection";
 import { CharacterModal } from "@/features/character-details/components/CharacterModal";
 import { CharacterGrid } from "@/features/characters/components/CharacterGrid";
 
 export default function CharactersPage() {
-	const [searchTerm, setSearchTerm] = useState("");
-
-	const handleSearch = (query: string) => {
-		setSearchTerm(query);
-	};
-
 	return (
 		<div
 			className="min-h-screen bg-space-950"
@@ -26,15 +17,9 @@ export default function CharactersPage() {
 					action={<SpoilerToggle />}
 				/>
 
-				<div className="mt-8 mb-12 max-w-2xl">
-					<SearchInput
-						onSearch={handleSearch}
-						placeholder="Search for characters across dimensions..."
-						debounceMs={300}
-					/>
-				</div>
+				<SearchSection placeholder="Search for characters across dimensions..." />
 
-				<CharacterGrid filter={searchTerm ? { name: searchTerm } : undefined} />
+				<CharacterGrid />
 			</div>
 
 			<CharacterModal />
