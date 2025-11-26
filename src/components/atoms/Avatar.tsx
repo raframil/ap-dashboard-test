@@ -17,11 +17,7 @@ export function Avatar({ src, alt, size = "md", className = "" }: AvatarProps) {
 
 	return (
 		<div
-			className={`
-        relative ${sizeClasses[size]} rounded-full overflow-hidden
-        border-2 border-brand
-        ${className}
-      `}
+			className={`relative ${sizeClasses[size]} shrink-0 rounded-full overflow-hidden border-2 border-brand ${className}`}
 		>
 			<Image
 				src={src}
