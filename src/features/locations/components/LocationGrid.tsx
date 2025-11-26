@@ -1,21 +1,21 @@
 "use client";
 
 import { IconMapPin } from "@tabler/icons-react";
+import { useSearchParams } from "next/navigation";
 import { Spinner } from "@/components/atoms/Spinner";
 import { ErrorMessage } from "@/components/molecules/ErrorMessage";
 import { SkeletonLoadingCard } from "@/components/molecules/SkeletonLoadingCard";
 import { EmptyState } from "@/components/organisms/EmptyState";
 import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
 import { useUIStore } from "@/stores/useUIStore";
-import type { LocationFilter } from "@/types/location";
 import { useLocations } from "../hooks/useLocations";
 import { LocationCard } from "./LocationCard";
 
-interface LocationGridProps {
-	filter?: LocationFilter;
-}
+export function LocationGrid() {
+	const searchParams = useSearchParams();
+	const searchTerm = searchParams.get("search") || "";
+	const filter = searchTerm ? { name: searchTerm } : undefined;
 
-export function LocationGrid({ filter }: LocationGridProps) {
 	const { locations, loading, error, loadMore, hasMore, refetch } =
 		useLocations(filter);
 	const { openLocationModal } = useUIStore();

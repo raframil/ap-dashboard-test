@@ -72,7 +72,7 @@ export function LocationModal() {
 				onKeyUp={(e) => e.stopPropagation()}
 			>
 				<div className="sticky top-0 bg-surface-elevated border-b border-DEFAULT p-6 flex items-start justify-between gap-4 z-10">
-					<div className="flex items-center gap-4">
+					<div className="flex flex-col sm:flex-row items-left sm:items-center gap-4">
 						<div className="shrink-0 w-20 h-20 rounded-full bg-brand/10 flex items-center justify-center">
 							<IconMapPin size={40} className="text-brand" />
 						</div>

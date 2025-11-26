@@ -1,21 +1,21 @@
 "use client";
 
 import { IconAlien } from "@tabler/icons-react";
+import { useSearchParams } from "next/navigation";
 import { Spinner } from "@/components/atoms/Spinner";
 import { ErrorMessage } from "@/components/molecules/ErrorMessage";
 import { SkeletonLoadingCard } from "@/components/molecules/SkeletonLoadingCard";
 import { EmptyState } from "@/components/organisms/EmptyState";
 import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
 import { useUIStore } from "@/stores/useUIStore";
-import type { CharacterFilter } from "@/types/character";
 import { useCharacters } from "../hooks/useCharacters";
 import { CharacterCard } from "./CharacterCard";
 
-interface CharacterGridProps {
-	filter?: CharacterFilter;
-}
+export function CharacterGrid() {
+	const searchParams = useSearchParams();
+	const searchTerm = searchParams.get("search") || "";
+	const filter = searchTerm ? { name: searchTerm } : undefined;
 
-export function CharacterGrid({ filter }: CharacterGridProps) {
 	const { characters, loading, error, loadMore, hasMore, refetch } =
 		useCharacters(filter);
 	const { openCharacterModal } = useUIStore();
