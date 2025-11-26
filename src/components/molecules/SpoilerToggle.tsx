@@ -33,26 +33,27 @@ export function SpoilerToggle() {
 
 	const renderCorrectEyeIcon = () => {
 		return isSpoilerModeEnabled ? (
-			<IconEyeOff size={20} />
-		) : (
 			<IconEye size={20} />
+		) : (
+			<IconEyeOff size={20} />
 		);
 	};
 
 	return (
-		<div className="relative flex flex-col gap-2 items-end" ref={menuRef}>
+		<div
+			className="relative flex flex-col gap-2 items-start md:items-end"
+			ref={menuRef}
+		>
 			<Button
 				onClick={toggleSpoilerMode}
-				variant={isSpoilerModeEnabled ? "secondary" : "primary"}
+				variant={isSpoilerModeEnabled ? "primary" : "secondary"}
 				size="sm"
-				aria-label={
-					isSpoilerModeEnabled ? "Show all spoilers" : "Hide spoilers"
-				}
+				aria-label={isSpoilerModeEnabled ? "Show All" : "Hide Spoilers"}
 				className="w-fit"
 			>
 				<div className="flex items-center gap-2">
 					{renderCorrectEyeIcon()}
-					{isSpoilerModeEnabled ? "Hide Spoilers" : "Show All"}
+					{isSpoilerModeEnabled ? "Show All" : "Hide Spoilers"}
 				</div>
 			</Button>
 

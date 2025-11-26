@@ -69,7 +69,7 @@ export const useUIStore = create<UIStore>()(
 			clearRevealedCharacters: () => set({ revealedCharacters: new Set() }),
 			isCharacterRevealed: (id) => {
 				const state = get();
-				return state.isSpoilerModeEnabled && state.revealedCharacters.has(id);
+				return !state.isSpoilerModeEnabled || state.revealedCharacters.has(id);
 			},
 		}),
 		{

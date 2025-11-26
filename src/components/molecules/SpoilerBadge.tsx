@@ -10,7 +10,8 @@ interface SpoilerBadgeProps {
 
 export function SpoilerBadge({ characterId, status }: SpoilerBadgeProps) {
 	const [badgeBlurredText, setBadgeBlurredText] = useState<string>("Spoiler");
-	const { isCharacterRevealed, revealCharacter } = useUIStore();
+	const { isCharacterRevealed, revealCharacter, isSpoilerModeEnabled } =
+		useUIStore();
 
 	const isRevealed = isCharacterRevealed(characterId);
 	const shouldBlur = !isRevealed;
@@ -23,6 +24,7 @@ export function SpoilerBadge({ characterId, status }: SpoilerBadgeProps) {
 
 	const handleReveal = (e: React.MouseEvent) => {
 		e.stopPropagation();
+		if (!isSpoilerModeEnabled) return;
 		revealCharacter(characterId);
 	};
 
