@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { SpoilerToggle } from "@/components/molecules/SpoilerToggle";
 import { PageHeader } from "@/components/organisms/PageHeader";
 import { SearchSection } from "@/components/organisms/SearchSection";
@@ -17,9 +18,13 @@ export default function CharactersPage() {
 					action={<SpoilerToggle />}
 				/>
 
-				<SearchSection placeholder="Search for characters across dimensions..." />
+				<Suspense fallback={<div className="mt-8 mb-12 max-w-2xl h-12" />}>
+					<SearchSection placeholder="Search for characters across dimensions..." />
+				</Suspense>
 
-				<CharacterGrid />
+				<Suspense fallback={<div>Loading...</div>}>
+					<CharacterGrid />
+				</Suspense>
 			</div>
 
 			<CharacterModal />
