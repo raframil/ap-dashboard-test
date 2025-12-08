@@ -19,7 +19,7 @@
 		"@apollo/client": "^4.0.9",
 		"@tabler/icons-react": "^3.35.0",
 		"graphql": "^16.12.0",
-		"next": "16.0.3",
+		"next": "16.0.7",
 		"react": "19.2.0",
 		"react-dom": "19.2.0",
 		"victory": "^37.3.6",
