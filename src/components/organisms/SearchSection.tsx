@@ -14,6 +14,9 @@ export function SearchSection({ placeholder }: SearchSectionProps) {
 
 	const handleSearch = (query: string) => {
 		const params = new URLSearchParams(searchParams.toString());
+		if (query === initialValue) {
+			return
+		}
 		query ? params.set("search", query) : params.delete("search");
 		router.push(`?${params.toString()}`, { scroll: false });
 	};
