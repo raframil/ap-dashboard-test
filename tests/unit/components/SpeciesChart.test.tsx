@@ -1,10 +1,10 @@
 import { screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import { SpeciesChart } from "@/features/characters/components/SpeciesChart";
-import * as useCharacterSpeciesCountsHook from "@/features/characters/hooks/useCharacterSpeciesCounts";
+import * as useCharacterSpeciesCountsHook from "@/features/characters/hooks/graphql";
 import { renderWithProviders } from "../../utils/test-utils";
 
-vi.mock("@/features/characters/hooks/useCharacterSpeciesCounts");
+vi.mock("@/features/characters/hooks/graphql");
 
 const mockSpeciesData = {
 	Human: { info: { count: 200 } },

@@ -1,4 +1,4 @@
-import { GET_CHARACTERS } from "@/features/characters/api";
+import { GET_CHARACTERS } from "@/features/characters/api/graphql";
 import { GET_LOCATIONS } from "@/features/locations/api";
 
 export const mockCharactersResponse = {

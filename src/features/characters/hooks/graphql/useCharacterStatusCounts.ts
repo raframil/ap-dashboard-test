@@ -1,7 +1,7 @@
 "use client";
 
 import { useQuery } from "@apollo/client/react";
-import { COUNT_CHARACTERS_STATUSES } from "../api/count-status";
+import { COUNT_CHARACTERS_STATUSES } from "../../api/graphql/count-status";
 
 export interface StatusCountsQueryResponse {
 	Alive: {

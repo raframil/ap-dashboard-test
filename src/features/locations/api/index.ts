@@ -1,2 +1,2 @@
-export * from "./get-location";
-export * from "./get-locations";
+// Re-export from graphql for backwards compatibility
+export * from "./graphql";

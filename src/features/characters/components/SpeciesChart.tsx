@@ -8,7 +8,7 @@ import {
 	VictoryTooltip,
 } from "victory";
 import { ChartContainer } from "@/components/charts/ChartContainer";
-import { useCharacterSpeciesCounts } from "../hooks/useCharacterSpeciesCounts";
+import { useCharacterSpeciesCounts } from "../hooks/graphql";
 
 export function SpeciesChart() {
 	const { result, loading, error } = useCharacterSpeciesCounts();

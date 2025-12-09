@@ -2,24 +2,12 @@
 
 import { useQuery } from "@apollo/client/react";
 import { useEffect, useMemo, useRef, useState } from "react";
-import type { Location } from "@/types/location";
-import { GET_LOCATIONS } from "../api";
+import type { Location, LocationsQueryResponse } from "@/types/location";
+import { GET_LOCATIONS } from "../../api/graphql";
 import {
 	mergeLocations,
 	transformLocationsToStats,
-} from "../utils/locationHelpers";
-
-export interface LocationsQueryResponse {
-	locations: {
-		info: {
-			count: number;
-			pages: number;
-			next: number | null;
-			prev: number | null;
-		};
-		results: Location[];
-	};
-}
+} from "../../utils/locationHelpers";
 
 export function useLocationStats() {
 	const { data, loading, error, fetchMore } = useQuery<LocationsQueryResponse>(

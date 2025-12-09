@@ -1,18 +1,102 @@
 import { screen, waitFor } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { CharacterGrid } from "@/features/characters/components/CharacterGrid";
-import {
-	mockCharactersError,
-	mockCharactersResponse,
-	mockEmptyCharactersResponse,
-} from "../utils/apollo-mocks";
 import { renderWithProviders } from "../utils/test-utils";
 
+const mockCharactersData = {
+	characters: {
+		info: {
+			count: 826,
+			pages: 42,
+			next: 2,
+			prev: null,
+		},
+		results: [
+			{
+				id: "1",
+				name: "Rick Sanchez",
+				status: "Alive",
+				species: "Human",
+				type: "",
+				gender: "Male",
+				origin: {
+					id: "1",
+					name: "Earth (C-137)",
+					type: "Planet",
+					dimension: "Dimension C-137",
+				},
+				location: {
+					id: "20",
+					name: "Citadel of Ricks",
+					type: "Space station",
+					dimension: "unknown",
+				},
+				image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg",
+				episode: [],
+				created: "2017-11-04T18:48:46.250Z",
+			},
+			{
+				id: "2",
+				name: "Morty Smith",
+				status: "Alive",
+				species: "Human",
+				type: "",
+				gender: "Male",
+				origin: {
+					id: "1",
+					name: "Earth (C-137)",
+					type: "Planet",
+					dimension: "Dimension C-137",
+				},
+				location: {
+					id: "20",
+					name: "Citadel of Ricks",
+					type: "Space station",
+					dimension: "unknown",
+				},
+				image: "https://rickandmortyapi.com/api/character/avatar/2.jpeg",
+				episode: [],
+				created: "2017-11-04T18:50:21.651Z",
+			},
+		],
+	},
+};
+
+const mockEmptyCharactersData = {
+	characters: {
+		info: { count: 0, pages: 0, next: null, prev: null },
+		results: [],
+	},
+};
+
+const mockNoMorePagesData = {
+	characters: {
+		...mockCharactersData.characters,
+		info: {
+			count: 2,
+			pages: 1,
+			next: null,
+			prev: null,
+		},
+	},
+};
+
 describe("CharacterGrid Integration", () => {
+	beforeEach(() => {
+		global.fetch = vi.fn();
+	});
+
+	afterEach(() => {
+		vi.restoreAllMocks();
+	});
+
 	it("fetches and displays characters on mount", async () => {
-		renderWithProviders(<CharacterGrid />, {
-			apolloMocks: [mockCharactersResponse],
-		});
+		vi.mocked(global.fetch).mockResolvedValueOnce({
+			ok: true,
+			json: async () => mockCharactersData,
+		} as Response);
+
+		renderWithProviders(<CharacterGrid />);
 
 		const skeletons = screen.getAllByTestId("skeleton-loading-card");
 		expect(skeletons.length).toBeGreaterThan(0);
@@ -28,18 +112,23 @@ describe("CharacterGrid Integration", () => {
 	});
 
 	it("displays loading skeletons while fetching", () => {
-		renderWithProviders(<CharacterGrid />, {
-			apolloMocks: [mockCharactersResponse],
-		});
+		vi.mocked(global.fetch).mockResolvedValueOnce({
+			ok: true,
+			json: async () => mockCharactersData,
+		} as Response);
+
+		renderWithProviders(<CharacterGrid />);
 
 		const skeletons = screen.getAllByTestId("skeleton-loading-card");
 		expect(skeletons.length).toBe(6);
 	});
 
 	it("displays error message when query fails", async () => {
-		renderWithProviders(<CharacterGrid />, {
-			apolloMocks: [mockCharactersError],
-		});
+		vi.mocked(global.fetch).mockRejectedValueOnce(
+			new Error("Network error: Failed to fetch"),
+		);
+
+		renderWithProviders(<CharacterGrid />);
 
 		await waitFor(
 			() => {
@@ -52,9 +141,12 @@ describe("CharacterGrid Integration", () => {
 	});
 
 	it("displays empty state when no characters found", async () => {
-		renderWithProviders(<CharacterGrid />, {
-			apolloMocks: [mockEmptyCharactersResponse],
-		});
+		vi.mocked(global.fetch).mockResolvedValueOnce({
+			ok: true,
+			json: async () => mockEmptyCharactersData,
+		} as Response);
+
+		renderWithProviders(<CharacterGrid />);
 
 		await waitFor(
 			() => {
@@ -69,9 +161,12 @@ describe("CharacterGrid Integration", () => {
 	});
 
 	it("renders character cards with correct data", async () => {
-		renderWithProviders(<CharacterGrid />, {
-			apolloMocks: [mockCharactersResponse],
-		});
+		vi.mocked(global.fetch).mockResolvedValueOnce({
+			ok: true,
+			json: async () => mockCharactersData,
+		} as Response);
+
+		renderWithProviders(<CharacterGrid />);
 
 		await waitFor(
 			() => {
@@ -88,24 +183,12 @@ describe("CharacterGrid Integration", () => {
 	});
 
 	it("displays end message when hasMore is false", async () => {
-		const mockNoMorePages = {
-			...mockCharactersResponse,
-			result: {
-				data: {
-					characters: {
-						...mockCharactersResponse.result.data.characters,
-						info: {
-							...mockCharactersResponse.result.data.characters.info,
-							next: null,
-						},
-					},
-				},
-			},
-		};
+		vi.mocked(global.fetch).mockResolvedValueOnce({
+			ok: true,
+			json: async () => mockNoMorePagesData,
+		} as Response);
 
-		renderWithProviders(<CharacterGrid />, {
-			apolloMocks: [mockNoMorePages],
-		});
+		renderWithProviders(<CharacterGrid />);
 
 		await waitFor(
 			() => {
@@ -121,9 +204,12 @@ describe("CharacterGrid Integration", () => {
 	});
 
 	it("renders multiple characters from API response", async () => {
-		renderWithProviders(<CharacterGrid />, {
-			apolloMocks: [mockCharactersResponse],
-		});
+		vi.mocked(global.fetch).mockResolvedValueOnce({
+			ok: true,
+			json: async () => mockCharactersData,
+		} as Response);
+
+		renderWithProviders(<CharacterGrid />);
 
 		await waitFor(
 			() => {

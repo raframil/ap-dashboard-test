@@ -34,3 +34,18 @@ export interface CharacterFilter {
 	type?: string;
 	gender?: string;
 }
+
+/**
+ * Shared response type for characters queries (both GraphQL and REST)
+ */
+export interface CharactersQueryResponse {
+	characters: {
+		info: {
+			count: number;
+			pages: number;
+			next: number | null;
+			prev: number | null;
+		};
+		results: Character[];
+	};
+}

@@ -8,7 +8,7 @@ import { SkeletonLoadingCard } from "@/components/molecules/SkeletonLoadingCard"
 import { EmptyState } from "@/components/organisms/EmptyState";
 import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
 import { useUIStore } from "@/stores/useUIStore";
-import { useCharacters } from "../hooks/useCharacters";
+import { useCharacters } from "../hooks/rest";
 import { CharacterCard } from "./CharacterCard";
 
 export function CharacterGrid() {

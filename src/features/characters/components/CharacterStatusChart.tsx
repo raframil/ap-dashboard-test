@@ -2,7 +2,7 @@
 
 import { ChartContainer } from "@/components/charts/ChartContainer";
 import { VictoryPieChartWrapper } from "@/components/charts/VictoryPieChartWrapper";
-import { useCharacterStatusCounts } from "../hooks/useCharacterStatusCounts";
+import { useCharacterStatusCounts } from "../hooks/graphql";
 
 const getColorForStatus = (status: string) => {
 	switch (status) {

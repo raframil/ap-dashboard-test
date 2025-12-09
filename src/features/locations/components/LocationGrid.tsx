@@ -8,7 +8,7 @@ import { SkeletonLoadingCard } from "@/components/molecules/SkeletonLoadingCard"
 import { EmptyState } from "@/components/organisms/EmptyState";
 import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
 import { useUIStore } from "@/stores/useUIStore";
-import { useLocations } from "../hooks/useLocations";
+import { useLocations } from "../hooks/graphql";
 import { LocationCard } from "./LocationCard";
 
 export function LocationGrid() {

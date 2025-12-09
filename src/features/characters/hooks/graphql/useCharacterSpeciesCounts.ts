@@ -1,7 +1,7 @@
 "use client";
 
 import { useQuery } from "@apollo/client/react";
-import { COUNT_CHARACTERS_SPECIES } from "../api/count-species";
+import { COUNT_CHARACTERS_SPECIES } from "../../api/graphql/count-species";
 
 export interface SpeciesCountsQueryResponse {
 	Human: {

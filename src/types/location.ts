@@ -21,3 +21,18 @@ export interface LocationFilter {
 	type?: string;
 	dimension?: string;
 }
+
+/**
+ * Shared response type for locations queries (both GraphQL and REST)
+ */
+export interface LocationsQueryResponse {
+	locations: {
+		info: {
+			count: number;
+			pages: number;
+			next: number | null;
+			prev: number | null;
+		};
+		results: Location[];
+	};
+}

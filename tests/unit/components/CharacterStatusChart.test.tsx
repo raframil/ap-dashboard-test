@@ -1,10 +1,10 @@
 import { screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import { CharacterStatusChart } from "@/features/characters/components/CharacterStatusChart";
-import * as useCharacterStatusCountsHook from "@/features/characters/hooks/useCharacterStatusCounts";
+import * as useCharacterStatusCountsHook from "@/features/characters/hooks/graphql";
 import { renderWithProviders } from "../../utils/test-utils";
 
-vi.mock("@/features/characters/hooks/useCharacterStatusCounts");
+vi.mock("@/features/characters/hooks/graphql");
 
 const mockStats = [
 	{ status: "Alive", count: 439, percentage: 0.7 },

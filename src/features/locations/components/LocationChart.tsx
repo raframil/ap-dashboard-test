@@ -2,7 +2,7 @@
 
 import { ChartContainer } from "@/components/charts/ChartContainer";
 import { VictoryPieChartWrapper } from "@/components/charts/VictoryPieChartWrapper";
-import { useLocationStats } from "../hooks/useLocationStats";
+import { useLocationStats } from "../hooks/graphql";
 
 const LOCATION_COLORS = [
 	"#3cffaa",

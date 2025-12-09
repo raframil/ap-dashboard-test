@@ -1,10 +1,10 @@
 import { screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import { LocationChart } from "@/features/locations/components/LocationChart";
-import * as useLocationStatsHook from "@/features/locations/hooks/useLocationStats";
+import * as useLocationStatsHook from "@/features/locations/hooks/graphql";
 import { renderWithProviders } from "../../utils/test-utils";
 
-vi.mock("@/features/locations/hooks/useLocationStats");
+vi.mock("@/features/locations/hooks/graphql");
 
 const mockStats = [
 	{
