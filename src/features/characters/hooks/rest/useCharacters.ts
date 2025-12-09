@@ -73,7 +73,9 @@ export function useCharacters(filter?: CharacterFilter) {
 			} catch (error) {
 				console.error("Error fetching characters", error);
 				setError(
-					error instanceof Error ? error : new Error("Failed to fetch characters"),
+					error instanceof Error
+						? error
+						: new Error("Failed to fetch characters"),
 				);
 			} finally {
 				setIsLoading(false);
