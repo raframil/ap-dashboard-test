@@ -1,20 +1,11 @@
 import { gql } from "@apollo/client";
+import { LOCATION_FULL } from "./fragments";
 
 export const GET_LOCATION = gql`
-  query GetLocation($id: ID!) {
-    location(id: $id) {
-      id
-      name
-      type
-      dimension
-      residents {
-        id
-        name
-        status
-        species
-        image
-      }
-      created
-    }
-  }
+	query GetLocation($id: ID!) {
+		location(id: $id) {
+			...LocationFull
+		}
+	}
+	${LOCATION_FULL}
 `;

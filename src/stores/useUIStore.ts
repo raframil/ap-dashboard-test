@@ -6,6 +6,8 @@ import type { Location } from "@/types/location";
 type PersistedUIState = {
 	isSpoilerModeEnabled: boolean;
 	revealedCharacters: string[];
+	characterViewMode: "grid" | "table";
+	locationViewMode: "grid" | "table";
 };
 
 interface UIStore {
@@ -16,6 +18,8 @@ interface UIStore {
 	searchQuery: string;
 	isSpoilerModeEnabled: boolean;
 	revealedCharacters: Set<string>;
+	characterViewMode: "grid" | "table";
+	locationViewMode: "grid" | "table";
 	setSelectedCharacter: (character: Character | null) => void;
 	openCharacterModal: (character: Character) => void;
 	closeCharacterModal: () => void;
@@ -27,6 +31,8 @@ interface UIStore {
 	hideCharacter: (characterId: string) => void;
 	clearRevealedCharacters: () => void;
 	isCharacterRevealed: (characterId: string) => boolean;
+	setCharacterViewMode: (mode: "grid" | "table") => void;
+	setLocationViewMode: (mode: "grid" | "table") => void;
 }
 
 export const useUIStore = create<UIStore>()(
@@ -39,6 +45,8 @@ export const useUIStore = create<UIStore>()(
 			searchQuery: "",
 			isSpoilerModeEnabled: true,
 			revealedCharacters: new Set<string>(),
+			characterViewMode: "grid",
+			locationViewMode: "grid",
 			setSelectedCharacter: (character) =>
 				set({ selectedCharacter: character }),
 			openCharacterModal: (character) =>
@@ -71,12 +79,16 @@ export const useUIStore = create<UIStore>()(
 				const state = get();
 				return !state.isSpoilerModeEnabled || state.revealedCharacters.has(id);
 			},
+			setCharacterViewMode: (mode) => set({ characterViewMode: mode }),
+			setLocationViewMode: (mode) => set({ locationViewMode: mode }),
 		}),
 		{
 			name: "portal-hub-ui",
 			partialize: (state): PersistedUIState => ({
 				isSpoilerModeEnabled: state.isSpoilerModeEnabled,
 				revealedCharacters: Array.from(state.revealedCharacters),
+				characterViewMode: state.characterViewMode,
+				locationViewMode: state.locationViewMode,
 			}),
 			merge: (persistedState: unknown, currentState: UIStore): UIStore => {
 				const state = persistedState as Partial<PersistedUIState>;
@@ -85,6 +97,8 @@ export const useUIStore = create<UIStore>()(
 					isSpoilerModeEnabled:
 						state.isSpoilerModeEnabled ?? currentState.isSpoilerModeEnabled,
 					revealedCharacters: new Set(state.revealedCharacters || []),
+					characterViewMode: state.characterViewMode ?? "grid",
+					locationViewMode: state.locationViewMode ?? "grid",
 				};
 			},
 		},
